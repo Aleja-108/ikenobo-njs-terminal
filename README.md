@@ -85,6 +85,8 @@ Ejemplo del header de autorización:
 
 ```json
 Authorization: Bearer <token>
+```
+
 
 ## 🧪 Estado actual del proyecto
 

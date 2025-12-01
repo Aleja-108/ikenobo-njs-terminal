@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>IKENOBO - Admin</title>
+  <link rel="icon" type="image/svg+xml" href="img/favicon_io (3)/favicon.ico" />
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js">
+  </script>
+  <link rel="stylesheet" href="style/style.css" />
+
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-dark bg-dark p-2 justify-content-center">
+  <a class="navbar-brand d-flex align-items-center" href="#">
+    <img src="img/ikenobo_logo.png" alt="Ikenobo" class="me-2 logo-nav">
+    <span>IKENOBO - Productos</span>
+  </a>
+</nav>
+
+<div class="container my-4">
+
+  <!-- LOGIN -->
+  <div class="card mb-4">
+    <div class="card-header">Login Admin</div>
+    <div class="card-body">
+      <input id="email" type="email" class="form-control mb-2" placeholder="Email">
+      <input id="password" type="password" class="form-control mb-3" placeholder="Password">
+
+      <div class="d-flex gap-2">
+        <button id="btn-login" class="btn btn-ikenobo btn-short">Iniciar sesión</button>
+        <button id="btn-logout" class="btn btn-outline-light btn-short">Cerrar sesión</button>
+      </div>
+
+      <p id="token" class="mt-3 small text-secondary">Token no generado aún</p>
+    </div>
+  </div>
+
+  <!-- CREAR PRODUCTO -->
+  <div class="card mb-4">
+    <div class="card-header">Agregar Producto</div>
+    <div class="card-body">
+      <input id="name" type="text" class="form-control mb-2" placeholder="Nombre">
+      <!-- input id="productID" type="text" class="form-control mb-2" placeholder="ProductID"-->
+      <input id="price" type="number" class="form-control mb-2" placeholder="Precio">
+      <!-- <input id="image" type="text" class="form-control mb-2" placeholder="Imagen (URL)"-->
+      <textarea id="description" rows="2" class="form-control mb-3" placeholder="Descripción..."></textarea>
+
+      <div class="d-flex gap-2">
+        <button id="btn-create" class="btn btn-ikenobo btn-short">Send</button>
+        <button id="btn-clear" class="btn btn-outline-light btn-short">Clear</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRODUCTOS -->
+  <div class="card mb-4">
+    <div class="card-header">Productos</div>
+    <div class="card-body">
+      <div class="d-flex gap-2 mb-3">
+        <input id="searchID" type="text" class="form-control" placeholder="Buscar ID del producto">
+        <button id="btn-search" class="btn btn-outline-light">Buscar</button>
+        <button id="btn-get-list" class="btn btn-ikenobo">Ver lista</button>
+      </div>
+
+      <table class="table table-dark table-hover text-center align-middle">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <!--th>Imagen</th-->
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="tabla-productos"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- JS -->
+<script src="script.js"></script>
+
+</body>
+</html>

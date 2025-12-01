@@ -1,0 +1,50 @@
+body {
+  background-color: #1a0000;
+  color: white;
+  font-family: 'Arial', sans-serif;
+}
+
+.navbar-brand img {
+  height: 75px;
+}
+
+.btn-ikenobo {
+  background-color: #c1272d;
+  color: white;
+}
+.btn-ikenobo:hover {
+  background-color: #a01f24;
+}
+
+.card {
+  background-color: #260303;
+  color: white;
+  border: 1px solid #c1272d;
+}
+
+.card-header {
+  font-size: 1.2rem; 
+  font-weight: 600;  
+  letter-spacing: 0.5px; 
+}
+
+/* Inputs más elegantes */
+.form-control {
+  background-color: #3b0c0c; 
+  color: white;
+  border: 1px solid #c1272d;
+}
+
+.form-control::placeholder {
+  color: #d8c3c3;  
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #ff4444; /* leve resaltado */
+  box-shadow: 0 0 5px #c1272d;
+}
+
+.btn-short {
+  width: 140px;      /* ajustá entre 120–160px según lo que te guste */
+}
