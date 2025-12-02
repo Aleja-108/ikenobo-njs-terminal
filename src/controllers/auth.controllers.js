@@ -8,6 +8,6 @@ export const login = async(req, res) => {
         const token = await generateToken(user);
         res.json({ token });
     } else {
-        res.sendStatus(401);
+        return res.status(401).json({ error: "Credenciales inválidas" });
     }
 }

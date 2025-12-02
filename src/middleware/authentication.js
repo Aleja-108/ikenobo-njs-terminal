@@ -17,13 +17,13 @@ import jwt from 'jsonwebtoken';
         //next();
     //});
     const header = req.headers["authorization"];
-    if (!header) return res.status(401).send("Unauthorized");
+    if (!header) return res.status(401).json({ error: "Unauthorized" });
 
     const token = header.split(" ")[1];
-    if (!token) return res.status(401).send("Unauthorized");
+    if (!token) return res.status(401).json({ error: "Unauthorized" });
 
     jwt.verify(token, secret_key, (err) => {
-      if (err) return res.status(403).send("Forbidden");
+      if (err) return res.status(403).json({ error: "Forbidden" });
       next();
     });
   }

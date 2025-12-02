@@ -1,4 +1,4 @@
-// CONFIG
+// CONFIG 
 let token = null;
 const API_URL = "https://ikenobo-njs-terminal-production.up.railway.app";
 
@@ -14,13 +14,14 @@ document.getElementById("btn-login").addEventListener("click", async () => {
       body: JSON.stringify({ email, password })
     });
 
-    const data = await res.json();
-
+    // Manejo seguro de respuesta
     if (!res.ok) {
-      alert("Error en login: " + (data.msg || data.error));
+      const text = await res.text(); // parsear como texto en caso de error
+      alert("Error en login: " + text);
       return;
     }
 
+    const data = await res.json();
     token = data.token;
     document.getElementById("token").textContent = "Token generado ✔️: " + token;
     alert("Login exitoso");
@@ -30,7 +31,6 @@ document.getElementById("btn-login").addEventListener("click", async () => {
     alert("Error de conexión");
   }
 });
-
 
 // LOGOUT
 document.getElementById("btn-logout").addEventListener("click", () => {
@@ -61,10 +61,9 @@ document.getElementById("btn-create").addEventListener("click", async () => {
       body: JSON.stringify(data)
     });
 
-    const json = await res.json();
-
     if (!res.ok) {
-      alert("Error al agregar el producto: " + (json.msg || json.error));
+      const text = await res.text();
+      alert("Error al agregar el producto: " + text);
       return;
     }
 
@@ -84,9 +83,7 @@ document.getElementById("btn-clear").addEventListener("click", () => {
 });
 
 // LISTAR PRODUCTOS
-document.getElementById("btn-get-list").addEventListener("click", () => {
-  getProducts();
-});
+document.getElementById("btn-get-list").addEventListener("click", getProducts);
 
 async function getProducts() {
   try {
@@ -95,6 +92,12 @@ async function getProducts() {
         "Authorization": `Bearer ${token}`
       }
     });
+
+    if (!res.ok) {
+      const text = await res.text();
+      alert("Error al obtener productos: " + text);
+      return;
+    }
 
     const data = await res.json();
 
@@ -114,7 +117,6 @@ async function getProducts() {
 // BUSCAR PRODUCTO POR ID
 document.getElementById("btn-search").addEventListener("click", async () => {
   const id = document.getElementById("searchID").value;
-
   if (!id) return alert("Ingresá un ID");
 
   try {
@@ -124,20 +126,19 @@ document.getElementById("btn-search").addEventListener("click", async () => {
       }
     });
 
-    const product = await res.json();
-
     if (!res.ok) {
-      alert(product.message || "Producto no encontrado");
+      const text = await res.text();
+      alert("Error al buscar producto: " + text);
       return;
     }
 
+    const product = await res.json();
     renderTable([product]);
 
   } catch (err) {
     console.error(err);
   }
 });
-
 
 // ELIMINAR PRODUCTO
 async function deleteProduct(id) {
@@ -151,8 +152,8 @@ async function deleteProduct(id) {
     });
 
     if (!res.ok) {
-      const json = await res.json();
-      alert(json.error || "No se pudo eliminar");
+      const text = await res.text();
+      alert("Error al eliminar producto: " + text);
       return;
     }
 
@@ -171,17 +172,14 @@ function renderTable(products) {
 
   products.forEach(p => {
     const tr = document.createElement("tr");
-
     tr.innerHTML = `
       <td>${p.id}</td>
-      
       <td>${p.name}</td>
       <td>$${p.price}</td>
       <td>
         <button class="btn btn-danger btn-sm" onclick="deleteProduct('${p.id}')">Eliminar</button>
       </td>
     `;
-
     tbody.appendChild(tr);
   });
 }
