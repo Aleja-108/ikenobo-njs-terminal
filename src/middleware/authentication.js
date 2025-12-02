@@ -5,15 +5,25 @@ import jwt from 'jsonwebtoken';
   export const authentication = (req, res, next) => {
 
     // LÍNEA NUEVA
-    if (!req.headers['authorization']) return res.sendStatus(401);
+    //if (!req.headers['authorization']) return res.sendStatus(401);
 
-    const token = req.headers['authorization'].split(" ")[1];
+    //const token = req.headers['authorization'].split(" ")[1];
 
-    if (!token) return res.sendStatus(401);
+    //if (!token) return res.sendStatus(401);
 
+
+    //jwt.verify(token, secret_key, (err) => {
+        //if (err) return res.sendStatus(403);
+        //next();
+    //});
+    const header = req.headers["authorization"];
+    if (!header) return res.status(401).send("Unauthorized");
+
+    const token = header.split(" ")[1];
+    if (!token) return res.status(401).send("Unauthorized");
 
     jwt.verify(token, secret_key, (err) => {
-        if (err) return res.sendStatus(403);
-        next();
+      if (err) return res.status(403).send("Forbidden");
+      next();
     });
   }

@@ -1,6 +1,6 @@
 // CONFIG
 let token = null;
-const API_URL = "https://ikenobo-njs-terminal-production.up.railway.app/api";
+const API_URL = "https://ikenobo-njs-terminal-production.up.railway.app";
 
 // LOGIN
 document.getElementById("btn-login").addEventListener("click", async () => {
@@ -8,7 +8,7 @@ document.getElementById("btn-login").addEventListener("click", async () => {
   const password = document.getElementById("password").value;
 
   try {
-    const res = await fetch(`${API_URL}/login`, {
+    const res = await fetch(`${API_URL}/api/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password })
@@ -52,7 +52,7 @@ document.getElementById("btn-create").addEventListener("click", async () => {
   };
 
   try {
-    const res = await fetch(`${API_URL}/products/create`, {
+    const res = await fetch(`${API_URL}/api/products/create`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -90,7 +90,7 @@ document.getElementById("btn-get-list").addEventListener("click", () => {
 
 async function getProducts() {
   try {
-    const res = await fetch(`${API_URL}/products`, {
+    const res = await fetch(`${API_URL}/api/products`, {
       headers: {
         "Authorization": `Bearer ${token}`
       }
@@ -118,7 +118,7 @@ document.getElementById("btn-search").addEventListener("click", async () => {
   if (!id) return alert("Ingresá un ID");
 
   try {
-    const res = await fetch(`${API_URL}/products/${id}`, {
+    const res = await fetch(`${API_URL}/api/products/${id}`, {
       headers: {
         "Authorization": `Bearer ${token}`
       }
@@ -145,7 +145,7 @@ async function deleteProduct(id) {
   if (!confirm("¿Eliminar producto?")) return;
 
   try {
-    const res = await fetch(`${API_URL}/products/${id}`, {
+    const res = await fetch(`${API_URL}/api/products/${id}`, {
       method: "DELETE",
       headers: { "Authorization": `Bearer ${token}` }
     });
