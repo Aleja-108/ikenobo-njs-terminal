@@ -32,11 +32,11 @@ app.use(express.static("public"));
 
 // LOGIN (sin token)
 
-app.use("/api", rutasLog);
+app.use("/api/login", rutasLog);
 
 //app.use(authentication);
 // PRODUCTOS necesita token
-app.use("/api", authentication, rutasProductos);
+app.use("/api/products", authentication, rutasProductos);
 
 // LOG DE REQUESTS
 app.use((req, res, next) => {

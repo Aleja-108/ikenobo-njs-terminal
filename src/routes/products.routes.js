@@ -7,19 +7,19 @@ import {
     editProduct
 } from "../controllers/products.controllers.js"
 
-import { authentication } from "../middleware/authentication.js"
+//import { authentication } from "../middleware/authentication.js"
 
 const routes = express.Router()
 
-routes.get("/products", getAllProducts)
+routes.get("/", getAllProducts)
 
-routes.get("/products/:id", getProductById)
+routes.get("/:id", getProductById)
 
-routes.post("/products/create", authentication, addProduct)
+routes.post("/create", addProduct)
 
-routes.delete("/products/:id", authentication, deleteProduct)
+routes.delete("/:id", deleteProduct)
 
-routes.put("/products/:id", authentication, editProduct )
+routes.put("/:id", editProduct)
 
 
 //routes.post("products", )
