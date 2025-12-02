@@ -1,58 +1,52 @@
-import express from "express"
-import cors from "cors"
-import rutasProductos from "./src/routes/products.routes.js"
-import rutasLog from "./src/routes/auth.routes.js"
-import { authentication} from "./src/middleware/authentication.js"
+import express from "express";
+import cors from "cors";
+import rutasProductos from "./src/routes/products.routes.js";
+import rutasLog from "./src/routes/auth.routes.js";
+import { authentication } from "./src/middleware/authentication.js";
 
-
-const app = express()
+const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Configuración de CORS
 const corsConfig = {
-    origin: [
-        'http://localhost:3000', 
-        'https://midominio.com' , 
-        'https://ikenobo-njs-terminal-production.up.railway.app',
-        'https://ikenoboterminal.netlify.app'], // dominios permitidos
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],                  // métodos permitidos
-    allowedHeaders: ['Content-Type', 'Authorization'],          // cabeceras permitidas
-    exposedHeaders: ['Content-Length'],                         // cabeceras visibles al cliente
-    credentials: true,                                          // habilitar credenciales
-    maxAge: 600,                                                // cache preflight
-    optionsSuccessStatus: 204                                   // respuesta preflight exitosa
-}
+  origin: [
+    "http://localhost:3000",
+    "https://midominio.com",
+    "https://ikenobo-njs-terminal-production.up.railway.app",
+    "https://ikenoboterminal.netlify.app"
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  exposedHeaders: ["Content-Length"],
+  credentials: true,
+  maxAge: 600,
+  optionsSuccessStatus: 204
+};
 
-const objeto = {
-    clave : "valor"
-}
-app.use(cors(corsConfig))
+app.use(cors(corsConfig));
 app.use(express.json());
 
-// FRONT
+// FRONTEND estático (Netlify no lo usa, pero si corrés local sí)
 app.use(express.static("public"));
 
-// LOGIN (sin token)
-
+// LOGIN (sin token) → debe existir en auth.routes.js como router.post("/")
 app.use("/api/login", rutasLog);
 
-//app.use(authentication);
-// PRODUCTOS necesita token
+// PRODUCTOS (con token)
 app.use("/api/products", authentication, rutasProductos);
 
-// LOG DE REQUESTS
+// LOG de requests
 app.use((req, res, next) => {
-    console.log(`Datos received at:  ${req.method} ${req.url}`);
-    next();
+  console.log(`Datos received at: ${req.method} ${req.url}`);
+  next();
 });
 
-//app.use("/api", rutasProductos)
-// 404
-app.use((req, res, next) => {
-    res.status(404).send('Recurso no encontrado o ruta inválida');
+// Middleware de 404 (si ninguna ruta coincide)
+app.use((req, res) => {
+  res.status(404).json({ error: "Recurso no encontrado o ruta inválida" });
 });
 
-// start server
+// Start server
 app.listen(PORT, () => {
-    console.log(`Servidor corriendo en el puerto ${PORT}`);
-})
-
+  console.log(`Servidor corriendo en el puerto ${PORT}`);
+});
