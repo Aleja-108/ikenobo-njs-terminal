@@ -16,14 +16,34 @@ import jwt from 'jsonwebtoken';
         //if (err) return res.sendStatus(403);
         //next();
     //});
+    // 1. Verificar que exista el header y que tenga el formato correcto
     const header = req.headers["authorization"];
-    if (!header) return res.status(401).json({ error: "Unauthorized" });
+    //if (!header) return res.status(401).json({ error: "Unauthorized" });
 
-    const token = header.split(" ")[1];
-    if (!token) return res.status(401).json({ error: "Unauthorized" });
+    //const token = header.split(" ")[1];
+    //if (!token) return res.status(401).json({ error: "Unauthorized" });
 
-    jwt.verify(token, secret_key, (err) => {
-      if (err) return res.status(403).json({ error: "Forbidden" });
-      next();
-    });
+    //jwt.verify(token, secret_key, (err) => {
+    //  if (err) return res.status(403).json({ error: "Forbidden" });
+   //   next();
+   // });
+   if (!header || !header.startsWith("Bearer ")) {
+    return res.status(401).json({ error: "Token mal formado o ausente" });
+  }
+
+  // 2. Extraer el token
+  const token = header.split(" ")[1];
+  if (!token) {
+    return res.status(401).json({ error: "Token no encontrado" });
+  }
+
+  // 3. Verificar el token con la clave secreta
+  jwt.verify(token, secret_key, (err) => {
+    if (err) {
+      return res.status(403).json({ error: "Token inválido o expirado" });
+    }
+    next();
+  });
+
+
   }
