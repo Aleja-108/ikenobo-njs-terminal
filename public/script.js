@@ -1,6 +1,6 @@
 // CONFIG
 let token = null;
-const API_URL = "https://ikenobo-njs-terminal-production.up.railway.app";
+const API_URL = "https://ikenobo-njs-terminal-production.up.railway.app/api";
 
 // LOGIN
 document.getElementById("btn-login").addEventListener("click", async () => {
