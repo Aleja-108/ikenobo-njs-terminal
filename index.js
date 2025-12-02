@@ -9,7 +9,7 @@ const app = express()
 const PORT = process.env.PORT || 3000;
 
 const corsConfig = {
-    origin: ['http://localhost:3000', 'https://midominio.com/'], // dominios permitidos
+    origin: ['http://localhost:3000', 'https://midominio.com/' , 'https://ikenobo-njs-terminal-production.up.railway.app'], // dominios permitidos
     methods: ['GET', 'POST', 'PUT', 'DELETE'],                  // métodos permitidos
     allowedHeaders: ['Content-Type', 'Authorization'],          // cabeceras permitidas
     exposedHeaders: ['Content-Length'],                         // cabeceras visibles al cliente
