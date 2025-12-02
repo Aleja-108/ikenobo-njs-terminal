@@ -14,23 +14,22 @@ document.getElementById("btn-login").addEventListener("click", async () => {
       body: JSON.stringify({ email, password })
     });
 
-    // Manejo seguro de respuesta
-    if (!res.ok) {
-      const text = await res.text(); // parsear como texto en caso de error
-      alert("Error en login: " + text);
-      return;
-    }
-
-    const data = await res.json();
-    token = data.token;
-    document.getElementById("token").textContent = "Token generado ✔️: " + token;
-    alert("Login exitoso");
-
-  } catch (err) {
-    console.error(err);
-    alert("Error de conexión");
+// Revisar si la respuesta es OK antes de parsear JSON
+  if (!res.ok) {
+    const text = await res.text(); // parsear como texto
+    alert("Error en login: " + text);
+    return;
   }
-});
+
+  const data = await res.json();
+  token = data.token;
+  alert("Login exitoso");
+
+    } catch (err) {
+      console.error(err);
+      alert("Error de conexión");
+    }
+  });
 
 // LOGOUT
 document.getElementById("btn-logout").addEventListener("click", () => {
